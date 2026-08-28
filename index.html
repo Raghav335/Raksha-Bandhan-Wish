@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Raksha Bandhan | Specially For My Sister</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #d90429;
+      --gold: #ffb703;
+      --accent: #fb8500;
+      --bg: #0b0118;
+      --card-bg: rgba(255, 255, 255, 0.07);
+      --text: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #230046 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 30px 15px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #petal-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .main-wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .container {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    .subtitle {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .description {
+      color: #d1d5db;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    /* Animated Vector Rakhi */
+    .rakhi-wrapper {
+      width: 125px;
+      height: 125px;
+      margin: 0 auto 25px;
+    }
+
+    .rakhi-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 12px rgba(255, 183, 3, 0.6));
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(255, 183, 3, 0.6)); }
+      50% { transform: scale(1.06); filter: drop-shadow(0 0 25px rgba(255, 183, 3, 0.9)); }
+    }
+
+    /* Personal Promises Section */
+    .brother-promises {
+      text-align: left;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 25px;
+      border-radius: 16px;
+      border-left: 4px solid var(--gold);
+      margin-bottom: 25px;
+    }
+
+    .brother-promises h3 {
+      color: var(--gold);
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .brother-promises p {
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .promises-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .promise-card {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .promise-card h4 {
+      color: var(--gold);
+      font-size: 0.92rem;
+      margin-bottom: 5px;
+    }
+
+    .promise-card p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
+
+    /* Form Controls */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      color: #0f021e;
+      font-weight: 700;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .btn:hover {
+      opacity: 0.95;
+      transform: translateY(-2px);
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, #2ec4b6, #0f9f90);
+      color: #ffffff;
+      margin-top: 15px;
+    }
+
+    /* Output Card Frame */
+    .card-output {
+      display: none;
+      background: #17022d;
+      padding: 30px 22px;
+      border-radius: 16px;
+      border: 2px dashed var(--gold);
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .card-output h2 {
+      color: var(--gold);
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .card-output p {
+      font-style: italic;
+      color: #e2e8f0;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .card-output .sender-tag {
+      display: block;
+      margin-top: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="petal-canvas"></canvas>
+
+  <div class="main-wrapper">
+    <div class="container">
+      <div class="subtitle">Dedicated to My Dearest Sister</div>
+      <h1>Happy Raksha Bandhan</h1>
+      <p class="description">A promise to stand by your side, support your dreams, and protect your happiness forever.</p>
+
+      <div class="rakhi-wrapper">
+        <svg class="rakhi-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="50" x2="100" y2="50" stroke="#d90429" stroke-width="4" stroke-dasharray="2 1"/>
+          <line x1="0" y1="50" x2="100" y2="50" stroke="#ffb703" stroke-width="2"/>
+          <circle cx="50" cy="50" r="30" fill="#d90429" stroke="#ffb703" stroke-width="2"/>
+          <circle cx="50" cy="20" r="5" fill="#ffb703"/>
+          <circle cx="50" cy="80" r="5" fill="#ffb703"/>
+          <circle cx="20" cy="50" r="5" fill="#ffb703"/>
+          <circle cx="80" cy="50" r="5" fill="#ffb703"/>
+          <circle cx="29" cy="29" r="5" fill="#ffb703"/>
+          <circle cx="71" cy="71" r="5" fill="#ffb703"/>
+          <circle cx="29" cy="71" r="5" fill="#ffb703"/>
+          <circle cx="71" cy="29" r="5" fill="#ffb703"/>
+          <circle cx="50" cy="50" r="18" fill="#fb8500" stroke="#ffffff" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="8" fill="#ffb703"/>
+          <circle cx="50" cy="50" r="4" fill="#ffffff"/>
+        </svg>
+      </div>
+
+      <div class="brother-promises">
+        <h3>✨ A Brother's Promises</h3>
+        <p>Rakhi is more than just a thread; it is my lifelong pledge to be your strongest support system:</p>
+
+        <div class="promises-grid">
+          <div class="promise-card">
+            <h4>🛡️ Lifetime Protection</h4>
+            <p>No matter the obstacle, I will always stand in front of you as your protective shield.</p>
+          </div>
+          <div class="promise-card">
+            <h4>💡 Tech & Career Guidance</h4>
+            <p>Whenever you need technical help or career advice, I will always be there to guide you.</p>
+          </div>
+          <div class="promise-card">
+            <h4>🌟 Supporting Your Dreams</h4>
+            <p>Whatever goals you aim to achieve, you will always have my full encouragement and support.</p>
+          </div>
+          <div class="promise-card">
+            <h4>🎁 Unconditional Friendship</h4>
+            <p>I promise to be not just a caring brother, but also a trustworthy friend you can share anything with.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="senderName" placeholder="Your Name (Brother)">
+        <input type="text" id="receiverName" placeholder="Sister's Name">
+        <textarea id="wishMessage" rows="3" placeholder="Write a custom wish or leave empty for a default blessing..."></textarea>
+        <button class="btn" onclick="generateCard()">Create Personal Wishing Card</button>
+      </div>
+
+      <div class="card-output" id="cardOutput">
+        <h2 id="outGreeting"></h2>
+        <p id="outMessage"></p>
+        <span class="sender-tag" id="outSender"></span>
+      </div>
+
+      <button class="btn btn-download" id="downloadBtn" style="display: none;" onclick="downloadCard()">
+        📥 Download Card as Image (.PNG)
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Falling Petals Canvas Mechanics
+    const canvas = document.getElementById('petal-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    class Petal {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * -height;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 1.5 + 0.8;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.angle = Math.random() * Math.PI * 2;
+        this.spin = Math.random() * 0.04 - 0.02;
+        this.color = ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffb703'][Math.floor(Math.random() * 4)];
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.01) + this.speedX;
+        this.angle += this.spin;
+        if (this.y > height + 20) { this.reset(); }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const petals = Array.from({ length: 40 }, () => new Petal());
+    function animatePetals() {
+      ctx.clearRect(0, 0, width, height);
+      petals.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    // Card Generation Function
+    function generateCard() {
+      const sender = document.getElementById('senderName').value.trim();
+      const receiver = document.getElementById('receiverName').value.trim();
+      const message = document.getElementById('wishMessage').value.trim();
+
+      if (!sender || !receiver) {
+        alert('Please enter both your name and your sister\'s name!');
+        return;
+      }
+
+      const defaultMessage = `Dear ${receiver}, on this auspicious occasion of Raksha Bandhan, I promise to always stand by your side, protect your happiness, and support all your dreams!`;
+
+      document.getElementById('outGreeting').innerText = `Happy Raksha Bandhan, ${receiver}! ✨`;
+      document.getElementById('outMessage').innerText = message ? `"${message}"` : `"${defaultMessage}"`;
+      document.getElementById('outSender').innerText = `With Unlimited Love & Support, ${sender}`;
+
+      document.getElementById('cardOutput').style.display = 'block';
+      document.getElementById('downloadBtn').style.display = 'block';
+
+      // Confetti Burst Trigger
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#ffb703', '#d90429', '#fb8500', '#ffffff']
+      });
+    }
+
+    // Export HTML Card DOM as PNG
+    function downloadCard() {
+      const cardElement = document.getElementById('cardOutput');
+      html2canvas(cardElement, {
+        backgroundColor: '#17022d',
+        scale: 2
+      }).then(c => {
+        const image = c.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = `RakshaBandhan_${document.getElementById('receiverName').value.trim()}.png`;
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
